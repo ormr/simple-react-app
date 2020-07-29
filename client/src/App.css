@@ -1,0 +1,168 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  width: 100%;
+}
+
+/* Main */
+
+.main {
+  height: 100vh;
+  display: flex;
+  background-image: url('./img/bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+/* Landing */
+
+.landing {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.landing-title {
+  color: #fff;
+  font-size: 35px;
+}
+
+.landing-buttons {
+  margin-top: 50px;
+}
+
+.landing-buttons a {
+  font-weight: bold;
+  margin-top: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #fff;
+  padding: 15px;
+  background-color: #3F3F5F;
+  font-size: 14px;
+}
+
+.landing-buttons a:last-child {
+  margin-left: 10px;
+  background-color: #3F8EEA;
+}
+
+.form-group {
+  margin-top: 15px;
+}
+
+
+/* Login / Register */
+
+.login-form, .register-form {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 346px;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  position: absolute;
+}
+
+.login-form .login-username,
+.login-form .login-password,
+.login-form .login-submit,
+.register-form .register-username,
+.register-form .register-password,
+.register-form .register-submit,
+.register-form .register-email {
+  -webkit-appearance: none;
+  height: 45px;
+  border-radius: 4px;
+  border: none;
+  width: 301px;
+  display: block;
+  box-shadow: rgba(0, 0, 0, 0.1) 3px 3px 5px;
+  font-size: 13px;
+}
+
+.login-form label, .register-form label {
+  height: 45px;
+  width: 45px;
+  background: #fff;
+  display: inline-block;
+  border-radius: 0 4px 4px 0;
+  margin-left: -2px;
+}
+
+.login-form label > svg, .register-form label > svg {
+  width: 15px;
+  height: 100%;
+  text-align: center;
+  fill: #484874;
+  vertical-align: middle;
+}
+
+.login-form .login-username, .login-form .login-password,
+.register-form .register-username, .register-form .register-password,
+.register-form .register-email {
+  padding: 0 20px 0 20px;
+  float: left;
+  border-radius: 4px 0 0 4px;
+  box-sizing: border-box;
+}
+
+.login-form .login-submit, .register-form .register-submit {
+  color: #fff;
+  background: #585886;
+  width: 100%;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.login-form .login-submit:hover, .login-form .login-submit:active,
+.register-form .register-submit:hover, .register-form .register-submit:active {
+  background: #484874;
+  outline: none;
+}
+
+.login-form input:focus, .login-form input:focus,
+.register-form input:focus, .register-form input:focus {
+  outline: 0;
+}
+
+.login-form h1, .login-form p, .login-form a,
+.register-form h1, .register-form p, .register-form a {
+  color: #fff;
+  margin: 10px 0 10px 0;
+  text-decoration: none;
+}
+
+.login-form h1,
+.register-form h1 {
+    font-weight: 100;
+    margin-bottom: 20px;
+    font-size: 42px;
+    font-weight: 100;
+}
+
+.login-form .login-motd,
+.register-form .register-motd {
+  font-size: 14px;
+  width: 300px;
+  margin: 0 auto 20px auto;
+}
+
+.login-form .login-forgotpassword {
+  font-size: 12px;
+  margin-top: 18px;
+  display: block;
+}
+
+.login-form .login-forgotpassword:hover,
+.login-form .login-forgotpassword:active{
+  text-decoration: underline;
+}
