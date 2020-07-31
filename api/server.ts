@@ -20,9 +20,13 @@ app.get('/', (req: Request, res: Response) => {
 
 io.on('connection', (socket: Socket) => {
   const { id } = socket.client;
-  console.log(`User Connected: ${id}`);
+  console.log(`User connected: ${id}`);
   socket.on('chat message', ({ nickname, msg }) => {
     io.emit('chat message', { nickname, msg });
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`User disconnected: ${id}`);
   });
 });
 

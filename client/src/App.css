@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  font-size: 18px;
 }
 
 html, body {
@@ -180,8 +181,8 @@ html, body {
   width: 100%;
 }
 
-.chat-footer textarea:hover {
-  outline: none;
+.chat-footer textarea:focus {
+  outline: 0;
 }
 
 .chat-footer button {
