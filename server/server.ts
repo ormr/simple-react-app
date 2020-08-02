@@ -16,9 +16,9 @@ app.get('/rooms', (req: Request, res: Response) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('User connected', socket);
+  console.log('User connected');
 })
 
-server.listen(8080, () => {
+server.listen(5000, () => {
   console.log('Server has been started');
 });
