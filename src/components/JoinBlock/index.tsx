@@ -1,19 +1,33 @@
-import React, { useState } from "react";
-import axios from 'axios'
-import { socket } from "../../socket";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { socket } from '../../socket';
 
-const JoinBlock: React.FC = () => {
-  const [roomId, setRoomId] = useState("");
-  const [userName, setUserName] = useState("");
+interface Props {
+  onLogin: () => any;
+}
 
-  const onEnter = (): void => {
+const JoinBlock: React.FC<any> = ({ onLogin }: any): JSX.Element => {
+  const [roomId, setRoomId] = useState('');
+  const [userName, setUserName] = useState('');
+  const [isLoading, setLoading] = useState(false);
+
+  const onEnter = async (): Promise<void> => {
     if (!(roomId.length > 0 && roomId.length < 10) || !userName) {
-      return alert('Wrong credentials')
+      return alert('Wrong credentials');
     }
-    axios.post('/rooms', {
+    setLoading(true);
+
+    const data = {
       roomId,
       userName
-    });
+    }
+
+    try {
+      await axios.post('/rooms', data);
+      await onLogin(data);
+    } catch (e) {
+      throw new Error(e);
+    }
   };
 
   return (
@@ -34,8 +48,8 @@ const JoinBlock: React.FC = () => {
           setUserName(e.target.value)
         }
       />
-      <button className="btn btn-success" onClick={() => onEnter()}>
-        Войти
+      <button disabled={isLoading ? true : false} className="btn btn-success" onClick={onEnter}>
+        {isLoading ? 'Вход...': 'Войти'}
       </button>
     </div>
   );

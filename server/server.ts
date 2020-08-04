@@ -27,6 +27,10 @@ app.post('/rooms', (req: Request, res: Response) => {
 });
 
 io.on('connection', (socket) => {
+  socket.on('ROOM:JOIN', (data) => {
+    console.log(data);
+  })
+
   console.log('User connected', socket.id);
 })
 
