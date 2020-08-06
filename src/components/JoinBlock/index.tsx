@@ -12,7 +12,7 @@ const JoinBlock: React.FC<any> = ({ onLogin }: any): JSX.Element => {
   const [isLoading, setLoading] = useState(false);
 
   const onEnter = async (): Promise<void> => {
-    if (!(roomId.length > 0 && roomId.length < 10) || !userName) {
+    if (!roomId || !userName) {
       return alert('Wrong credentials');
     }
     setLoading(true);

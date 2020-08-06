@@ -33,6 +33,8 @@ const Chat: React.FC<any> = ({ users, messages, userName, roomId, onAddMessage }
     messagesRef.current.scrollTo(0, 99999);
   }, [messages]);
 
+  console.log(users);
+
   return (
     <div className="chat">
       <div className="chat-users">
@@ -40,9 +42,11 @@ const Chat: React.FC<any> = ({ users, messages, userName, roomId, onAddMessage }
         <hr />
         <b>Онлайн ({users.length}):</b>
         <ul>
-          {users.map((name: string, index: string) => (
-            <li key={`${name}${index}`}>{name}</li>
-          ))}
+          {
+            users.map((name: string, index: string) => (
+              <li key={`${name[1]}${index}`}>{name[1]}</li>
+            ))
+          }
         </ul>
       </div>
       <div className="chat-messages">

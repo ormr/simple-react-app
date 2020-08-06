@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import axios, { AxiosResponse } from 'axios';
 import io from 'socket.io-client';
 import './App.css';
 import { JoinBlock } from '../JoinBlock';
@@ -15,24 +16,25 @@ interface IData {
 const App: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  const onLogin = (data: IData): void => {
+  const onLogin = async (object: IData): Promise<void> => {
     dispatch({
       type: 'JOINED',
-      payload: data
+      payload: object
     });
-    socket.emit('ROOM:JOIN', data);
+    socket.emit('ROOM:JOIN', object);
+    const { data }: AxiosResponse<any> = await axios.get(`/rooms/${object.roomId}`);
+    setUsers(data.users);
   }
 
-  console.log(state);
+  const setUsers = (users: any): void => {
+    dispatch({
+      type: 'SET_USERS',
+      payload: users
+    });
+  }
 
   useEffect(() => {
-    socket.on('ROOM:JOINED', (users: any) => {
-      console.log(users);
-      dispatch({
-        type: 'SET_USERS',
-        payload: users
-      })
-    })
+    socket.on('ROOM:SET_USERS', setUsers);
   }, [])
 
   return (
