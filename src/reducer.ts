@@ -1,9 +1,11 @@
-import { IState } from './actions/constants';
+import { IState, JoinChatAction } from './actions/constants';
 
 export const initialState: IState = {
   joined: false,
   roomId: null,
-  userName: null
+  userName: null,
+  users: [],
+  messages: []
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -14,6 +16,16 @@ const reducer = (state = initialState, action: any) => {
         joined: true,
         userName: action.payload.userName,
         roomId: action.payload.roomId
+      };
+    case 'SET_USERS':
+      return {
+        ...state,
+        users: action.payload
+      };
+    case 'SET_MESSAGES':
+      return {
+        ...state,
+        messages: action.payload
       };
     default:
       return state;

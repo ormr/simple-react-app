@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import http from 'http';
-import useSocket from 'socket.io';
+import useSocket, { Socket } from 'socket.io';
 
 const app = express();
 const server = http.createServer(app);
@@ -26,10 +26,13 @@ app.post('/rooms', (req: Request, res: Response) => {
   res.json([...rooms.keys()]);
 });
 
-io.on('connection', (socket) => {
-  socket.on('ROOM:JOIN', (data) => {
-    console.log(data);
-  })
+io.on('connection', (socket: Socket) => {
+  socket.on('ROOM:JOIN', ({ roomId, userName }) => {
+    socket.join(roomId);
+    rooms.get(roomId).get('users').set(socket.id, userName);
+    const users = [...rooms.get(roomId).get('users').values()];
+    socket.to(roomId).broadcast.emit('ROOM:JOINED', users);
+  });
 
   console.log('User connected', socket.id);
 })

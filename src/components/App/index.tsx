@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import io from 'socket.io-client';
 import './App.css';
 import { JoinBlock } from '../JoinBlock';
+import { Chat } from '../Chat';
 import { socket } from '../../socket';
 import { initialState, reducer } from '../../reducer';
 
@@ -24,9 +25,19 @@ const App: React.FC = () => {
 
   console.log(state);
 
+  useEffect(() => {
+    socket.on('ROOM:JOINED', (users: any) => {
+      console.log(users);
+      dispatch({
+        type: 'SET_USERS',
+        payload: users
+      })
+    })
+  }, [])
+
   return (
     <div className="wrapper">
-      {!state.joined && <JoinBlock onLogin={onLogin}/>}
+      {!state.joined ? <JoinBlock onLogin={onLogin}/> : <Chat {...state}/>}
     </div>
   );
 }

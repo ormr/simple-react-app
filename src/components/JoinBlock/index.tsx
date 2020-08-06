@@ -22,12 +22,8 @@ const JoinBlock: React.FC<any> = ({ onLogin }: any): JSX.Element => {
       userName
     }
 
-    try {
-      await axios.post('/rooms', data);
-      await onLogin(data);
-    } catch (e) {
-      throw new Error(e);
-    }
+    await axios.post('/rooms', data);
+    await onLogin(data);
   };
 
   return (
