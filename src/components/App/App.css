@@ -63,6 +63,7 @@
 }
 
 .message {
+  display: flex;
   margin-bottom: 20px;
 }
 
@@ -105,4 +106,8 @@
 .chat-messages form textarea {
   width: 100%;
   margin-bottom: 10px;
+}
+
+.left {
+  margin-left: auto;
 }

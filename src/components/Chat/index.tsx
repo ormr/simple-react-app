@@ -49,14 +49,21 @@ const Chat: React.FC<any> = ({ users, messages, userName, roomId, onAddMessage }
       </div>
       <div className="chat-messages">
         <div ref={messagesRef} className="messages">
-          {messages.map((message: any, index: number) => (
-            <div key={message + index} className="message">
-              <p>{message.text}</p>
-              <div>
-                <span>{message.userName}</span>
-              </div>
-            </div>
-          ))}
+          {
+            messages.map((message: any, index: number) => {
+              const isYou = message.userName === userName;
+              return (
+                <div key={message + index} className={isYou ? "message left" : "message"}>
+                  <div className={isYou ? "left" : ""}>
+                    <p>{message.text}</p>
+                    <div>
+                      <span>{message.userName}</span>
+                    </div>
+                  </div>
+                </div>
+              )
+            })
+          }
         </div>
         <form>
           <textarea
