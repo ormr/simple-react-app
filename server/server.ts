@@ -15,8 +15,8 @@ app.get('/rooms/:id', (req: Request, res: Response) => {
   const { id: roomId } = req.params;
   const data: any = rooms.has(roomId)
   ? {
-    users: [...rooms.get(roomId).get('users')],
-    messages: [...rooms.get(roomId).get('messages')]
+    users: [...rooms.get(roomId).get('users').values()],
+    messages: [...rooms.get(roomId).get('messages').values()]
     } 
   : { users: [], messages: [] }
   res.json(data);
@@ -42,6 +42,16 @@ io.on('connection', (socket: Socket) => {
     rooms.get(roomId).get('users').set(socket.id, userName);
     const users = [...rooms.get(roomId).get('users').values()];
     socket.to(roomId).broadcast.emit('ROOM:SET_USERS', users);
+  });
+
+  socket.on('ROOM:NEW_MESSAGE', ({ roomId, userName, text }) => {
+    const obj = {
+      userName,
+      text
+    };
+    
+    rooms.get(roomId).get('messages').push(obj);
+    socket.to(roomId).broadcast.emit('ROOM:NEW_MESSAGE', obj);
   });
 
   console.log('User connected', socket.id);

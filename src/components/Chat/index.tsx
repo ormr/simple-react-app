@@ -17,7 +17,7 @@ interface Props {
 
 const Chat: React.FC<any> = ({ users, messages, userName, roomId, onAddMessage }: any) => {
   const [messageValue, setMessageValue] = useState('');
-  const messagesRef: React.MutableRefObject<any> = useRef(null);
+  const messagesRef = React.useRef<any>(null);
 
   const onSendMessage = () => {
     socket.emit('ROOM:NEW_MESSAGE', {
@@ -25,15 +25,13 @@ const Chat: React.FC<any> = ({ users, messages, userName, roomId, onAddMessage }
       roomId,
       text: messageValue,
     });
-    onAddMessage({ userName, Text, messageValue });
+    onAddMessage({ userName, text: messageValue });
     setMessageValue('');
   };
 
   useEffect(() => {
     messagesRef.current.scrollTo(0, 99999);
-  }, [messages]);
-
-  console.log(users);
+  }, [ messages ])
 
   return (
     <div className="chat">
@@ -44,15 +42,15 @@ const Chat: React.FC<any> = ({ users, messages, userName, roomId, onAddMessage }
         <ul>
           {
             users.map((name: string, index: string) => (
-              <li key={`${name[1]}${index}`}>{name[1]}</li>
+              <li key={`${name}${index}`}>{name}</li>
             ))
           }
         </ul>
       </div>
       <div className="chat-messages">
         <div ref={messagesRef} className="messages">
-          {messages.map((message) => (
-            <div className="message">
+          {messages.map((message: any, index: number) => (
+            <div key={message + index} className="message">
               <p>{message.text}</p>
               <div>
                 <span>{message.userName}</span>

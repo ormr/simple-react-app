@@ -21,6 +21,7 @@ const App: React.FC = () => {
       type: 'JOINED',
       payload: object
     });
+
     socket.emit('ROOM:JOIN', object);
     const { data }: AxiosResponse<any> = await axios.get(`/rooms/${object.roomId}`);
     setUsers(data.users);
@@ -31,15 +32,24 @@ const App: React.FC = () => {
       type: 'SET_USERS',
       payload: users
     });
+  };
+
+  const addMessage = (message: any): void => {
+    dispatch({
+      type: 'NEW_MESSAGE',
+      payload: message
+    });
   }
 
   useEffect(() => {
     socket.on('ROOM:SET_USERS', setUsers);
-  }, [])
+    socket.on('ROOM:NEW_MESSAGE', addMessage)
+  }, []);
+
 
   return (
     <div className="wrapper">
-      {!state.joined ? <JoinBlock onLogin={onLogin}/> : <Chat {...state}/>}
+      {!state.joined ? <JoinBlock onLogin={onLogin}/> : <Chat {...state} onAddMessage={addMessage}/>}
     </div>
   );
 }
