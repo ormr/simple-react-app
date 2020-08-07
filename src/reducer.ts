@@ -1,14 +1,14 @@
-import { IState } from './actions/constants';
+import { IState, ChatActionsTypes } from './constants';
 
 export const initialState: IState = {
   joined: false,
-  roomId: null,
-  userName: null,
+  roomId: '',
+  userName: '',
   users: [],
   messages: []
 };
 
-const reducer = (state = initialState, action: any) => {
+const reducer = (state = initialState, action: ChatActionsTypes) => {
   switch (action.type) {
     case 'JOINED':
       return {

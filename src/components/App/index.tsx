@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import io from 'socket.io-client';
 import './App.css';
 import { JoinBlock } from '../JoinBlock';
 import { Chat } from '../Chat';
 import { socket } from '../../socket';
 import { initialState, reducer } from '../../reducer';
+import { Message } from "../../constants";
 
 
 interface IData {
@@ -23,21 +23,21 @@ const App: React.FC = () => {
     });
 
     socket.emit('ROOM:JOIN', object);
-    const { data }: AxiosResponse<any> = await axios.get(`/rooms/${object.roomId}`);
+    const { data }: AxiosResponse = await axios.get(`/rooms/${object.roomId}`);
     dispatch({
       type: 'SET_DATA',
       payload: data
     });
   }
 
-  const setUsers = (users: any): void => {
+  const setUsers = (users: string[]): void => {
     dispatch({
       type: 'SET_USERS',
       payload: users
     });
   };
 
-  const addMessage = (message: any): void => {
+  const addMessage = (message: Message): void => {
     dispatch({
       type: 'NEW_MESSAGE',
       payload: message

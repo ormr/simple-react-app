@@ -1,23 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { socket } from '../../socket';
+import {Message} from "../../constants";
 
 interface Props {
-  users: {
-    name: string;
-    index: string;
-  }[];
-  messages: {
-    text: string;
-    userName: string;
-  }[];
-  userName: string;
-  roomId: string;
-  onAddMessage: (props: { userName: string, text: string, messageValue: string }) => any;
+  users: string[]
+  messages: Message[]
+  userName: string
+  roomId: string
+  onAddMessage: (props: Message) => void
 }
 
-const Chat: React.FC<any> = ({ users, messages, userName, roomId, onAddMessage }: any) => {
+const Chat: React.FC<Props> = ({ users, messages, userName = '', roomId, onAddMessage }: Props) => {
   const [messageValue, setMessageValue] = useState('');
-  const messagesRef = React.useRef<any>(null);
+  const messagesRef = useRef<any>(null);
 
   const onSendMessage = () => {
     socket.emit('ROOM:NEW_MESSAGE', {
@@ -25,7 +20,11 @@ const Chat: React.FC<any> = ({ users, messages, userName, roomId, onAddMessage }
       roomId,
       text: messageValue,
     });
-    onAddMessage({ userName, text: messageValue });
+
+    onAddMessage({
+      userName: userName,
+      text: messageValue
+    });
     setMessageValue('');
   };
 
@@ -41,7 +40,7 @@ const Chat: React.FC<any> = ({ users, messages, userName, roomId, onAddMessage }
         <b>Онлайн ({users.length}):</b>
         <ul>
           {
-            users.map((name: string, index: string) => (
+            users.map((name: string, index: number) => (
               <li key={`${name}${index}`}>{name}</li>
             ))
           }
@@ -50,10 +49,10 @@ const Chat: React.FC<any> = ({ users, messages, userName, roomId, onAddMessage }
       <div className="chat-messages">
         <div ref={messagesRef} className="messages">
           {
-            messages.map((message: any, index: number) => {
+            messages.map((message: Message, index: number) => {
               const isYou = message.userName === userName;
               return (
-                <div key={message + index} className={isYou ? "message left" : "message"}>
+                <div key={userName + index} className={isYou ? "message left" : "message"}>
                   <div className={isYou ? "left" : ""}>
                     <p>{message.text}</p>
                     <div>
